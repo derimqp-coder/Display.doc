@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Doc - Handy Reparatur Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           DISPLAY DOC LOGO - CSS ONLY
+           ============================================ */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .phone-body {
+            position: absolute;
+            width: 30px;
+            height: 44px;
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            border-radius: 6px;
+            top: 3px;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .phone-screen {
+            width: 24px;
+            height: 36px;
+            background: #0a0a0a;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pixel-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 2px;
+            padding: 2px;
+        }
+
+        .pixel {
+            background: #00d4ff;
+            border-radius: 1px;
+            animation: pixelGlow 2s infinite;
+        }
+
+        .pixel:nth-child(1) { animation-delay: 0s; }
+        .pixel:nth-child(2) { animation-delay: 0.2s; }
+        .pixel:nth-child(3) { animation-delay: 0.4s; }
+        .pixel:nth-child(4) { animation-delay: 0.1s; }
+        .pixel:nth-child(5) { animation-delay: 0.3s; }
+        .pixel:nth-child(6) { animation-delay: 0.5s; }
+        .pixel:nth-child(7) { animation-delay: 0.2s; }
+        .pixel:nth-child(8) { animation-delay: 0.4s; }
+        .pixel:nth-child(9) { animation-delay: 0.6s; }
+        .pixel:nth-child(10) { animation-delay: 0.3s; }
+        .pixel:nth-child(11) { animation-delay: 0.5s; }
+        .pixel:nth-child(12) { animation-delay: 0.7s; }
+
+        @keyframes pixelGlow {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #00d4ff; }
+        }
+
+        .tool {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            border-radius: 50%;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+            animation: toolPulse 3s infinite;
+            z-index: 10;
+        }
+
+        @keyframes toolPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); box-shadow: 0 4px 15px rgba(255, 215, 0, 0.6); }
+        }
+
+        .tool::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #333;
+            border-radius: 2px;
+            transform: rotate(45deg);
+        }
+
+        .tool::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-top: 6px solid #ccc;
+            top: 50%;
+            margin-top: 1px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .logo-sub {
+            font-size: 9px;
+            color: #7b2cbf;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .logo-container:hover .tool {
+            animation: toolRotate 0.5s ease;
+        }
+
+        @keyframes toolRotate {
+            0% { transform: rotate(0deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1.1); }
+        }
+
+        .logo-small .logo-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-small .phone-body {
+            width: 24px;
+            height: 35px;
+        }
+
+        .logo-small .phone-screen {
+            width: 20px;
+            height: 29px;
+        }
+
+        .logo-small .tool {
+            width: 18px;
+            height: 18px;
+        }
+
+        .logo-small .tool::before {
+            width: 10px;
+            height: 10px;
+        }
+
+        .logo-small .logo-main {
+            font-size: 22px;
+        }
+
+        .logo-small .logo-sub {
+            font-size: 8px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00d4ff;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 0;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.3), rgba(10,10,10,0.95));
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+
+        .hero-logo {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-logo .logo-icon {
+            width: 100px;
+            height: 100px;
+        }
+
+        .hero-logo .phone-body {
+            width: 60px;
+            height: 88px;
+            border-radius: 12px;
+        }
+
+        .hero-logo .phone-screen {
+            width: 50px;
+            height: 74px;
+            border-radius: 8px;
+        }
+
+        .hero-logo .pixel-grid {
+            gap: 4px;
+            padding: 4px;
+        }
+
+        .hero-logo .tool {
+            width: 44px;
+            height: 44px;
+        }
+
+        .hero-logo .tool::before {
+            width: 24px;
+            height: 24px;
+        }
+
+        .hero-logo .tool::after {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 10px solid #ccc;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: #cccccc;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .hero-highlights {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.3s;
+            animation-fill-mode: both;
+        }
+
+        .highlight {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 17px;
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .highlight-icon {
+            font-size: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 45px;
+            background: linear-gradient(45deg, #00d4ff, #7b2cbf);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.4s;
+            animation-fill-mode: both;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 50px;
+            background: #0a0a0a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #aaaaaa;
+            font-size: 17px;
+            margin-bottom: 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, #00d4ff, #7b2cbf);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+            border-color: #00d4ff;
+        }
+
+        .service-card.featured {
+            border: 2px solid #00d4ff;
+            transform: scale(1.03);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .service-card.featured:hover {
+            transform: scale(1.03) translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .service-card p {
+            color: #aaaaaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .price-list {
+            text-align: left;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-type {
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .price-value {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* FARBE FÜR LCD - CYAN */
+        .price-value.lcd {
+            color: #00d4ff;
+        }
+
+        /* FARBE FÜR OLED - LILA */
+        .price-value.oled {
+            color: #7b2cbf;
+        }
+
+        /* FARBE FÜR ORIGINAL - GOLD/GELB */
+        .price-value.original {
+            color: #ffd700;
+        }
+
+        .quality-options {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .quality-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .quality-badge.lcd {
+            background: rgba(0, 212, 255, 0.15);
+            color: #00d4ff;
+            border: 1px solid #00d4ff;
+        }
+
+        .quality-badge.oled {
+            background: rgba(123, 44, 191, 0.15);
+            color: #7b2cbf;
+            border: 1px solid #7b2cbf;
+        }
+
+        .quality-badge.original {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            border: 1px solid #ffd700;
+        }
+
+        /* WARTEZEIT HINWEIS */
+        .waiting-notice {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+            border: 1px solid #ffd700;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .waiting-notice-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .waiting-notice h4 {
+            color: #ffd700;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .waiting-notice p {
+            color: #cccccc;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Social Media QR Section */
+        .social-section {
+            padding: 80px 50px;
+            background: linear-gradient(to bottom, #0a0a0a, #111111);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-card.instagram {
+            border-color: #e4405f;
+        }
+
+        .social-card.tiktok {
+            border-color: #00f2ea;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .social-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .social-card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .social-card.instagram h3 {
+            color: #e4405f;
+        }
+
+        .social-card.tiktok h3 {
+            color: #00f2ea;
+        }
+
+        .social-card p {
+            color: #aaaaaa;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .social-link {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .social-link.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .social-link.tiktok {
+            background: linear-gradient(45deg, #00f2ea, #ff0050);
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Process Section */
+        .process {
+            padding: 100px 50px;
+            background: #111111;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(to right, #00d4ff, #7b2cbf);
+            z-index: 0;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #00d4ff, #7b2cbf);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            border: 4px solid #0a0a0a;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .step h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .step p {
+            color: #aaaaaa;
+            font-size: 14px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 50px;
+            background: #0a0a0a;
+        }
+
+        .contact-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+        }
+
+        .contact-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .whatsapp-box {
+            border: 2px solid #25d366;
+            background: linear-gradient(135deg, #25d36610, #128c7e10);
+        }
+
+        .email-box {
+            border: 2px solid #ea4335;
+            background: linear-gradient(135deg, #ea433510, #fbbc0510);
+        }
+
+        .contact-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .contact-box h3 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-box h3 {
+            color: #25d366;
+        }
+
+        .email-box h3 {
+            color: #ea4335;
+        }
+
+        .contact-box > p {
+            text-align: center;
+            color: #aaaaaa;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        .contact-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border-radius: 30px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .contact-button.whatsapp {
+            background: #25d366;
+        }
+
+        .contact-button.email {
+            background: #ea4335;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-form-box {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-form-box h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #00d4ff;
+            font-size: 24px;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 22px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #00d4ff;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group label .required {
+            color: #ff4444;
+        }
+
+        .contact-method-toggle {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-option {
+            flex: 1;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-option:hover {
+            border-color: #00d4ff;
+        }
+
+        .toggle-option.active {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .toggle-option .icon {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .toggle-option div {
+            font-size: 13px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #666;
+        }
+
+        .device-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #00d4ff, #7b2cbf);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .privacy-notice {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        /* Info Section */
+        .info-section {
+            padding: 80px 50px;
+            background: #111111;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .info-icon {
+            font-size: 44px;
+            margin-bottom: 18px;
+        }
+
+        .info-card h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .info-card p {
+            color: #aaaaaa;
+            font-size: 15px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px;
+            background: #000000;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #aaaaaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00d4ff;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .contact-item a {
+            color: #25d366;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .copyright {
+            color: #666666;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            color: #00d4ff;
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: #aaaaaa;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .new-request-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #00d4ff;
+            color: #00d4ff;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .new-request-btn:hover {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 12px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo-main {
+                font-size: 22px;
+            }
+
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 120px 20px 80px;
+            }
+
+            .hero-logo .logo-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero-highlights {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .highlight {
+                font-size: 15px;
+            }
+
+            .services {
+                padding: 60px 20px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card.featured {
+                transform: none;
+            }
+
+            .service-card.featured:hover {
+                transform: translateY(-10px);
+            }
+
+            .waiting-notice {
+                margin: 20px;
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form-box {
+                grid-column: 1;
+                padding: 25px;
+            }
+
+            .form-row,
+            .device-info {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps::before {
+                display: none;
+            }
+
+            .step {
+                min-width: 100%;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .qr-code {
+                width: 180px;
+                height: 180px;
+            }
+
+            footer {
+                padding: 40px 20px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#home" class="logo-container">
+            <div class="logo-icon">
+                <div class="phone-body">
+                    <div class="phone-screen">
+                        <div class="pixel-grid">
+                            <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                            <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                            <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                            <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool"></div>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">Display Doc</span>
+                <span class="logo-sub">Smartphone Repair</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Leistungen</a></li>
+            <li><a href="#social">Social Media</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-typing-on-a-laptop-4807-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-logo">
+                <div class="logo-icon">
+                    <div class="phone-body">
+                        <div class="phone-screen">
+                            <div class="pixel-grid">
+                                <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                                <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                                <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                                <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tool"></div>
+                </div>
+            </div>
+            <h1>Display Doc</h1>
+            <p>Professionelle Handy-Reparatur zum fairen Preis</p>
+            <div class="hero-highlights">
+                <div class="highlight">
+                    <span class="highlight-icon">📱</span>
+                    <span>Display-Reparatur</span>
+                </div>
+                <div class="highlight">
+                    <span class="highlight-icon">🔋</span>
+                    <span>Akku-Tausch</span>
+                </div>
+                <div class="highlight">
+                    <span class="highlight-icon">💰</span>
+                    <span>Günstiger als Apple</span>
+                </div>
+            </div>
+            <a href="#contact" class="cta-button">Jetzt Reparatur anfragen</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Unsere Spezialitäten</h2>
+            <p class="section-subtitle">Wir reparieren alle gängigen Marken und Modelle - professionell und schnell</p>
+            
+            <div class="services-grid">
+                <div class="service-card featured">
+                    <div class="service-icon">📱</div>
+                    <h3>Display-Reparatur</h3>
+                    <p>Hochwertige Displays in verschiedenen Qualitätsstufen. Deutlich günstiger als beim Hersteller.</p>
+                    <div class="price-list">
+                        <div class="price-item">
+                            <span class="price-type">LCD Display (Premium)</span>
+                            <span class="price-value lcd">ab 80€</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-type">OLED Display (Premium)</span>
+                            <span class="price-value oled">ab 110€</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-type">Original Display</span>
+                            <span class="price-value original">ab 130€</span>
+                        </div>
+                    </div>
+                    <div class="quality-options">
+                        <span class="quality-badge lcd">LCD</span>
+                        <span class="quality-badge oled">OLED</span>
+                        <span class="quality-badge original">Original</span>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔋</div>
+                    <h3>Akku-Tausch</h3>
+                    <p>Neuer Akku für mehr Power und längere Laufzeit. Hochwertige Ersatzakkus mit voller Kapazität.</p>
+                    <span class="price-tag" style="display: inline-block; padding: 8px 20px; background: rgba(0, 212, 255, 0.1); border: 1px solid #00d4ff; border-radius: 20px; color: #00d4ff; font-weight: bold;">ab 39€</span>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔌</div>
+                    <h3>Ladebuchse</h3>
+                    <p>Neue Ladebuchse wenn Ihr Handy nicht mehr lädt oder die Verbindung wackelt.</p>
+                    <span class="price-tag" style="display: inline-block; padding: 8px 20px; background: rgba(0, 212, 255, 0.1); border: 1px solid #00d4ff; border-radius: 20px; color: #00d4ff; font-weight: bold;">ab 45€</span>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">📷</div>
+                    <h3>Kamera-Reparatur</h3>
+                    <p>Kamera defekt oder verschwommen? Wir tauschen Front- und Rückkamera fachgerecht aus.</p>
+                    <span class="price-tag" style="display: inline-block; padding: 8px 20px; background: rgba(0, 212, 255, 0.1); border: 1px solid #00d4ff; border-radius: 20px; color: #00d4ff; font-weight: bold;">ab 55€</span>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Sonstige Reparaturen</h3>
+                    <p>Lautsprecher, Mikrofon, Buttons, Gehäuse - wir finden für jedes Problem eine Lösung.</p>
+                    <span class="price-tag" style="display: inline-block; padding: 8px 20px; background: rgba(0, 212, 255, 0.1); border: 1px solid #00d4ff; border-radius: 20px; color: #00d4ff; font-weight: bold;">auf Anfrage</span>
+                </div>
+            </div>
+
+            <!-- WARTEZEIT HINWEIS -->
+            <div class="waiting-notice">
+                <div class="waiting-notice-icon">⏰</div>
+                <h4>Bitte beachten</h4>
+                <p>Da ich kein eigenes Lager habe, müssen Kunden bei Reparaturen <strong>2-3 Werktage</strong> Wartezeit einplanen. Die Geräte werden nach Absprache bei Ihnen abgeholt und nach der Reparatur wieder zurückgebracht.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media QR Section -->
+    <section class="social-section" id="social">
+        <div class="container">
+            <h2 class="section-title">Folgen Sie uns</h2>
+            <p class="section-subtitle">Sehen Sie sich professionelle und effiziente Reparaturen unserer Kunden an</p>
+            
+            <div class="social-grid">
+                <div class="social-card instagram">
+                    <div class="qr-code">
+                        <img src="/mnt/kimi/upload/insta%20.png" alt="Instagram QR Code">
+                    </div>
+                    <div class="social-icon">📸</div>
+                    <h3>Instagram</h3>
+                    <p>@displaydoktor_nrw<br>Reparaturen & Impressionen</p>
+                    <a href="https://www.instagram.com/displaydoktor_nrw?igsh=MWF2ZG9kOWJ5Y2VqNA%3D%3D&utm_source=qr" target="_blank" class="social-link instagram">Instagram öffnen</a>
+                </div>
+                
+                <div class="social-card tiktok">
+                    <div class="qr-code">
+                        <img src="/mnt/kimi/upload/Tiktok.png" alt="TikTok QR Code">
+                    </div>
+                    <div class="social-icon">🎵</div>
+                    <h3>TikTok</h3>
+                    <p>@rovand_777<br>Repair Videos & Tipps</p>
+                    <a href="https://www.tiktok.com/@rovand_777?_r=1&_t=ZN-94XiULImqFG" target="_blank" class="social-link tiktok">TikTok öffnen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <div class="container">
+            <h2 class="section-title">So funktioniert's</h2>
+            <p class="section-subtitle">Einfach, schnell und unkompliziert</p>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Anfrage senden</h3>
+                    <p>Via WhatsApp, E-Mail oder Formular</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Kostenlos prüfen</h3>
+                    <p>Wir analysieren das Problem und nennen den Preis</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Reparatur</h3>
+                    <p>Professionelle Reparatur in 2-3 Werktagen</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Abholung & Rückgabe</h3>
+                    <p>Wir holen ab und bringen es zurück</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Kontaktieren Sie uns</h2>
+            <p class="section-subtitle">Wählen Sie Ihre bevorzugte Kontaktmethode - wir melden uns umgehend!</p>
+            
+            <div class="contact-wrapper">
+                <div class="contact-box whatsapp-box">
+                    <div class="contact-icon">💬</div>
+                    <h3>WhatsApp</h3>
+                    <p>Schnellster Weg - Antwort meist sofort</p>
+                    <a href="https://wa.me/491739566788" class="contact-button whatsapp" target="_blank">
+                        +49 173 9566788
+                    </a>
+                </div>
+                
+                <div class="contact-box email-box">
+                    <div class="contact-icon">✉️</div>
+                    <h3>E-Mail</h3>
+                    <p>Für ausführliche Anfragen & Angebote</p>
+                    <a href="mailto:info@displaydoc.de" class="contact-button email">
+                        info@displaydoc.de
+                    </a>
+                </div>
+                
+                <div class="contact-form-box">
+                    <h3>Direkt Anfragen</h3>
+                    <form class="contact-form" id="repairForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Name <span class="required">*</span></label>
+                                <input type="text" name="name" required placeholder="Max Mustermann">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Kontaktmethode <span class="required">*</span></label>
+                                <div class="contact-method-toggle">
+                                    <div class="toggle-option active" data-method="whatsapp" onclick="toggleContactMethod('whatsapp')">
+                                        <div class="icon">💬</div>
+                                        <div>WhatsApp</div>
+                                    </div>
+                                    <div class="toggle-option" data-method="email" onclick="toggleContactMethod('email')">
+                                        <div class="icon">✉️</div>
+                                        <div>E-Mail</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row" id="contactInputRow">
+                            <div class="form-group full-width">
+                                <label id="contactLabel">WhatsApp-Nummer <span class="required">*</span></label>
+                                <input type="tel" name="contact" id="contactInput" required placeholder="+49 176 12345678">
+                            </div>
+                        </div>
+
+                        <div class="form-row device-info">
+                            <div class="form-group">
+                                <label>Marke</label>
+                                <select name="brand">
+                                    <option value="">Bitte wählen</option>
+                                    <option value="apple">Apple iPhone</option>
+                                    <option value="samsung">Samsung</option>
+                                    <option value="huawei">Huawei</option>
+                                    <option value="xiaomi">Xiaomi</option>
+                                    <option value="google">Google Pixel</option>
+                                    <option value="oneplus">OnePlus</option>
+                                    <option value="sony">Sony</option>
+                                    <option value="other">Andere</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Modell</label>
+                                <input type="text" name="model" placeholder="z.B. iPhone 13 Pro">
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Problem beschreiben <span class="required">*</span></label>
+                            <textarea name="problem" required rows="5" placeholder="Beschreiben Sie bitte das Problem mit Ihrem Handy. Was ist passiert? Was funktioniert nicht mehr? Je genauer, desto besser können wir Ihnen helfen."></textarea>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <button type="submit" class="submit-btn">Anfrage senden</button>
+                        </div>
+
+                        <p class="privacy-notice">
+                            Hinweis: Dies ist eine Dienstleistung ohne Garantie. Wir verwenden hochwertige Ersatzteile.<br>
+                            Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Daten zu. 
+                            <a href="#" style="color: #00d4ff;">Datenschutzerklärung</a>
+                        </p>
+                    </form>
+
+                    <div class="success-message" id="successMessage">
+                        <div class="success-icon">✅</div>
+                        <h3>Anfrage erfolgreich gesendet!</h3>
+                        <p>Wir melden uns so schnell wie möglich bei Ihnen.</p>
+                        <button class="new-request-btn" onclick="resetForm()">Neue Anfrage</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-icon">⏰</div>
+                <h3>2-3 Werktage</h3>
+                <p>Wartezeit wegen Bestellung (kein Lager)</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🚚</div>
+                <h3>Abholung & Rückgabe</h3>
+                <p>Wir kommen zu Ihnen - keine Anfahrt nötig</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">💎</div>
+                <h3>Premium-Qualität</h3>
+                <p>LCD, OLED & Original-Displays</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">💰</div>
+                <h3>Faire Preise</h3>
+                <p>Bis zu 50% günstiger als Apple</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo-container">
+                <a href="#home" class="logo-container logo-small">
+                    <div class="logo-icon">
+                        <div class="phone-body">
+                            <div class="phone-screen">
+                                <div class="pixel-grid">
+                                    <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                                    <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                                    <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                                    <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tool"></div>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-main">Display Doc</span>
+                        <span class="logo-sub">Smartphone Repair</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>💬</span>
+                    <a href="https://wa.me/491739566788" target="_blank">WhatsApp: +49 173 9566788</a>
+                </div>
+                <div class="contact-item">
+                    <span>✉️</span>
+                    <a href="mailto:info@displaydoc.de">info@displaydoc.de</a>
+                </div>
+                <div class="contact-item">
+                    <span>🕐</span>
+                    <span>Mo-Fr: 9-18 Uhr, Sa: 10-14 Uhr</span>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#services">Leistungen</a>
+                <a href="#social">Social Media</a>
+                <a href="#contact">Kontakt</a>
+                <a href="#">Impressum</a>
+                <a href="#">Datenschutz</a>
+                <a href="#">AGB</a>
+            </div>
+            
+            <p class="copyright">&copy; 2026 Display Doc - Handy Reparatur Service. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+
+        // Contact Method Toggle
+        let currentMethod = 'whatsapp';
+
+        function toggleContactMethod(method) {
+            currentMethod = method;
+            const options = document.querySelectorAll('.toggle-option');
+            const label = document.getElementById('contactLabel');
+            const input = document.getElementById('contactInput');
+            
+            options.forEach(opt => {
+                if (opt.dataset.method === method) {
+                    opt.classList.add('active');
+                } else {
+                    opt.classList.remove('active');
+                }
+            });
+
+            if (method === 'whatsapp') {
+                label.innerHTML = 'WhatsApp-Nummer <span class="required">*</span>';
+                input.type = 'tel';
+                input.placeholder = '+49 176 12345678';
+            } else {
+                label.innerHTML = 'E-Mail Adresse <span class="required">*</span>';
+                input.type = 'email';
+                input.placeholder = 'max@beispiel.de';
+            }
+        }
+
+        // Form Submission
+        document.getElementById('repairForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            document.getElementById('repairForm').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        function resetForm() {
+            document.getElementById('repairForm').reset();
+            document.getElementById('repairForm').style.display = 'grid';
+            document.getElementById('successMessage').classList.remove('show');
+            toggleContactMethod('whatsapp');
+        }
+    </script>
+
+</body>
+</html>
